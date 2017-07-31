@@ -43,8 +43,8 @@ class Calc
         $file = new \SplFileObject($filepath);
         while (!$file->eof()) {
             $line = $file->fgets();
-            $op = substr($line, 1, 1);
-            $n = (int) substr($line, 2);
+            $op = substr($line, 0, 1);
+            $n = (int) substr($line, 1);
             $this->doOp($op,$n);
         }
         return $this->equals();

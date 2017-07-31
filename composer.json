@@ -1,0 +1,15 @@
+{
+    "name": "ciandt/dojo-behat",
+    "authors": [
+        {
+            "name": "Bruno Wowk",
+            "email": "bwowk@ciandt.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "Ciandt\\": "src"
+      }
+    }
+}
