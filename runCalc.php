@@ -8,6 +8,8 @@ $calc = new Calc();
 $calc->doOp('+',15);
 $calc->doOp('-',5);
 
-echo $calc->equals();
+$calc->equals();
+
+echo $calc->printHistory();
 
  ?>

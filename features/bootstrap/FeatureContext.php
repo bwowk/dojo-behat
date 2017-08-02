@@ -1,8 +1,10 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use PHPUnit\Framework\Assert;
 
 use Ciandt\Calc;
 
@@ -52,4 +54,34 @@ class FeatureContext implements Context
         }
     }
 
+    /**
+    * @When I press equals
+    */
+   public function iPressEquals()
+   {
+     $this->calculator->equals();
+   }
+
+   /**
+    * @Then It should print:
+    */
+   public function itShouldPrint(PyStringNode $string)
+   {
+     $history = $this->calculator->printHistory();
+     Assert::assertStringMatchesFormat($string->getRaw(), $history);
+   }
+
+
+
+    /**
+     * @When I do the operations:
+     */
+    public function iDoTheOperations(TableNode $table)
+    {
+       foreach ($table->getRows() as $row) {
+         $operator = $row[0];
+         $number = $row[1];
+         $this->calculator->doOp($operator, $number);
+       };
+    }
 }
