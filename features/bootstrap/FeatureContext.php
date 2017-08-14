@@ -27,6 +27,7 @@ class FeatureContext implements Context
 
     /**
      * @Given I have a calculator
+     * creates a Ciandt\Calc instance
      */
     public function iHaveCalculator()
     {
@@ -41,6 +42,7 @@ class FeatureContext implements Context
     {
         $this->calculator->doOp('+',$arg1);
         $this->calculator->doOp('+',$arg2);
+        echo $arg1;
     }
 
     /**

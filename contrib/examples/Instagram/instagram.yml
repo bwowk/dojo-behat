@@ -1,0 +1,44 @@
+#used on scenarios tagged @instagram or @instagram:default
+default:
+  placeholders:
+    #replaces ${content_loaded}
+    content_loaded: document.readyState == 'complete'
+    #replaces ${site_url}
+    site_url: https://www.instagram.com
+    #replaces ${lang_url}
+    lang_url:
+        $default:
+            $pt: /?hl=pt
+            $br: /?hl=pt-br
+            $us: /?hl=en
+            $de: /?hl=de
+        $development:
+            $br: /hl=pt-br&op=dev
+            $us: /hl=en&op=dev
+            # The following variants will be set with $default's value since they aren't being specified here
+            # $de:
+            # $pt:
+    #replaces ${slogan}
+    slogan:
+        $default:
+            $br: Cadastre-se para ver fotos e vídeos dos seus amigos.
+            $us: Sign up to see photos and videos from your friends.
+            $pt: Regista-te para veres as fotos e os vídeos dos teus amigos.
+            $de: Registriere dich, damit du die Fotos und Videos deiner Freunde sehen kannst.
+    #replaces ${sign_up_e-mail}
+    sign_up_e-mail: //input[@name='emailOrPhone']
+    #replaces ${sign_up_full_name}
+    sign_up_full_name: //input[@name='fullName']
+    #replaces ${sign_up_username}
+    sign_up_username: //input[@name='username']
+    #replaces ${sign_up_password}
+    sign_up_password: //input[@name='password']
+    #replaces ${password}
+    password:
+        $default:
+            $us: english123#
+            $de: deutschland123#
+            $pt: portugues123#
+            $br: portugues123#
+    #replaces ${rotate_user_login}
+    rotate_user_login: //*[@id='react-root']/section/main/article/div[2]/div[1]/div/form/div[4]/div/a/span

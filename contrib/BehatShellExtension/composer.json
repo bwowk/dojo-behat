@@ -1,0 +1,33 @@
+{
+    "name": "postcon/behat-shell-extension",
+    "type": "behat-extension",
+    "description": "A Behat Extension for executing shell commands remote and locally",
+    "version": "1.0.0",
+    "keywords": [
+        "behat",
+        "bdd",
+        "ssh",
+        "scp"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Team DevStreet",
+            "email": "team-devstreet@postcon.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "behat/behat": "^3.0",
+        "symfony/process": "^2.6|~3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Postcon\\BehatShellExtension\\": "lib/",
+            "Postcon\\Tests\\BehatShellExtension\\": "tests/"
+        }
+    }
+}

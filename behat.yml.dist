@@ -1,0 +1,72 @@
+default:
+    formatters:
+      html:
+        output_path: %paths.base%/reports
+      pretty: ~
+    extensions:
+        Knp\FriendlyContexts\Extension: ~
+        Behat\WebApiExtension: ~
+        Ciandt\Behat\PlaceholdersExtension:
+          config_tags:
+              konica: %paths.base%/Konica/Common/konica.yml
+              msi: %paths.base%/Konica/MSIntegration/msi.yml
+              client: %paths.base%/Konica/MSIntegration/cli.yml
+        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+          name: html
+          renderer: Behat2
+          file_name: index
+          print_args: true
+          print_outp: true
+          loop_break: true
+    suites:
+        default:
+            paths: [%paths.base%/Konica]
+            contexts:
+                - Ciandt\MyDebugContext: ~
+                - Ciandt\ApiContext: ~
+                - Ciandt\CliContext: ~
+        msi:
+            paths:
+                - %paths.base%/Konica/MSIntegration
+                - %paths.base%/Konica/Common
+            contexts:
+                - Ciandt\MyDebugContext: ~
+                - Ciandt\ApiContext: ~
+
+backup:
+    extensions:
+        Knp\FriendlyContexts\Extension: ~
+        Behat\WebApiExtension: ~
+        Ciandt\Behat\PlaceholdersExtension:
+          config_tags:
+              backup: %paths.base%/Konica/BackupRecovery/backup.yml
+              konica: %paths.base%/Konica/Common/konica.yml
+          variant_tags:
+              - ldap
+              - mongodb
+              - postgresql
+        Postcon\BehatShellExtension\Extension:
+          kwph:
+              type: local
+        bwowk\Behat\OverlookExtension:
+          overlook_tag: overlook
+    suites:
+        default:
+            paths:
+                - %paths.base%/Konica/BackupRecovery
+                - %paths.base%/Konica/Common
+            filters:
+                tags: '@smartStep,@KWPH-313,@KWPH-316,@KWPH-317,@KWPH-318,@KWPH-327,@KWPH-525,@KWPH-537,@KWPH-847,@KWPH-854,@KWPH-864,@KWPH-215,@KWPH-1028'
+            contexts:
+                - Ciandt\MyDebugContext: ~
+                - Ciandt\ApiContext: ~
+                - Ciandt\MyCliContext: ~
+                - Ciandt\FilesystemContext: ~
+        status_api:
+            paths:
+                - %paths.base%/Konica/BackupRecovery
+            filters:
+                tags: '@smartStep,@KWPH-858'
+            contexts:
+                - Ciandt\ApiContext: ~
+                - Ciandt\FilesystemContext: ~

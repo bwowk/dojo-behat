@@ -1,0 +1,49 @@
+{
+  "name": "ciandt/docker-behat",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "description": "CI&T Behat setup running under docker",
+  "license": "proprietary",
+    "repositories": [
+    {
+      "type": "path",
+      "url": "contrib"
+    },
+    {
+      "type": "path",
+      "url": "contrib/HtmlFormatter"
+    },
+    {
+      "type": "path",
+      "url": "contrib/behat-visual-regression"
+    },
+    {
+      "type": "path",
+      "url": "contrib/MinkSelenium2Driver"
+    },
+    {
+      "type": "path",
+      "url": "contrib/behat-placeholders-extension"
+    },
+    {
+      "type": "path",
+      "url": "contrib/WebApiExtension"
+    },
+    {
+      "type": "path",
+      "url": "contrib/BehatShellExtension"
+    }
+  ],
+  "require": {
+    "ciandt/behat-contrib-bundle": "^1",
+    "bwowk/behat-overlook-extension": "^0.1.0"
+  },
+  "config": {
+    "bin-dir": "bin/"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ciandt\\": "contexts/"
+    }
+  }
+}

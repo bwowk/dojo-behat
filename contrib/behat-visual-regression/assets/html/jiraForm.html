@@ -1,0 +1,102 @@
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+    <div class="modal-body">
+      <form id="jira-create-form">
+        <div id="btn-jira-logout" class="btn btn-danger">
+          logout  <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+        </div>
+        <div class="form-group" data-field-key="project" data-value-type="key">
+          <label for="input-jira-project">Project</label>
+          <select id="input-jira-project" class="form-control"/></select>
+        </div>
+        <div class="form-group" data-field-key="issuetype" data-value-type="id">
+          <label for="input-jira-issue-type">Issue type</label>
+          <select id="input-jira-issue-type" class="form-control">
+            <option value="1">Bug</option>
+            <option value="4">Improvement</option>
+            <option value="52">Legacy Bug</option>
+            <option value="8">Sub-Bug</option>
+            <option value="55">Sub-Change Request</option>
+            <option value="10000">Sub-Legacy Bug</option>
+          </select>
+        </div>
+        <div class="form-group" data-field-key="parent"  data-value-type="id">
+          <label for="input-jira-parent">Parent issue</label>
+          <select id="input-jira-parent" class="form-control"></select>
+        </div>
+        <div class="form-group" data-field-key="summary"  data-value-type="string">
+          <label for="input-jira-summary">Summary</label>
+          <input type="text" id="input-jira-summary" class="form-control" placeholder="Summary"></input>
+        </div>
+        <div class="form-group" data-field-key="components"  data-value-type="id">
+          <label for="input-jira-components">Components</label>
+          <select id="input-jira-components" multiple class="form-control"></select>
+        </div>
+        <div class="form-group" data-field-key="priority"  data-value-type="id">
+          <label for="input-jira-priority">Priority</label>
+          <select id="input-jira-priority" class="form-control">
+            <option value="1">Blocker</option>
+            <option value="2">Critical</option>
+            <option value="3">Major</option>
+            <option value="4">Minor</option>
+            <option value="5">Trivial</option>
+          </select>
+        </div>
+        <div class="form-group" data-field-key="versions"  data-value-type="id">
+          <label for="input-jira-affects">Affects version(s)</label>
+          <select id="input-jira-affects" multiple class="form-control"></select>
+        </div>
+        <div class="form-group" data-field-key="description"  data-value-type="string">
+          <label for="input-jira-description">Description</label>
+          <textarea id="input-jira-description" class="form-control" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group" data-field-key="customfield_10310"  data-value-type="id">
+          <label for="input-jira-bug-type">Bug type</label>
+          <select id="input-jira-bug-type" class="form-control bug" name="customfield_10310"></select>
+        </div>
+        <div class="form-group" data-field-key="customfield_12510"  data-value-type="id">
+          <label for="input-jira-dev-phase">Development Phase</label>
+          <select id="input-jira-dev-phase" class="form-control bug" name="customfield_12510">
+            <option value="-1">None</option>
+            <option value="11800">DEV</option>
+            <option value="11801">UAT</option>
+            <option value="11802">PROD</option>
+          </select>
+        </div>
+        <div class="form-group" data-field-key="customfield_13724"  data-value-type="string">
+          <label for="input-jira-steps-reproduce">Steps to reproduce</label>
+          <textarea id="input-jira-steps-reproduce" class="form-control" placeholder="Steps to reproduce"></textarea>
+        </div>
+        <div class="form-group" data-field-key="customfield_13722"  data-value-type="string">
+          <label for="input-jira-expected">Expected Result</label>
+          <textarea id="input-jira-expected" class="form-control" placeholder="Expected result"></textarea>
+        </div>
+        <div class="form-group" data-field-key="customfield_13725"  data-value-type="string">
+          <label for="input-jira-actual">Actual Result</label>
+          <textarea id="input-jira-actual" class="form-control" placeholder="Actual result"></textarea>
+        </div>
+        <div class="form-group" data-field-key="labels"  data-value-type="string">
+          <label for="input-jira-labels">Labels</label>
+          <select id="input-jira-labels" multiple class="form-control"></select>
+        </div>
+        <div class="form-group" data-field-key="customfield_13723"  data-value-type="id">
+          <label for="input-jira-reported-by">Reported By</label>
+          <select id="input-jira-reported-by" class="form-control" name="customfield_10310">
+            <option value="-1">None</option>
+            <option value="12860">Internal</option>
+            <option value="12861">External</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="input-issue-images">Attachments</label>
+          <ul id="jira-issue-images" class="center-block list-inline" class="form-control"></ul>
+        </div>
+        <div id="btn-jira-create-issue" class="center-block btn btn-default form-control">
+          create  <span class="glyphicon icon-jira" aria-hidden="true"></span>
+          <span class="glyphicon glyphicon-refresh spin pull-right loading" style="visibility: hidden" aria-hidden="true"></span>
+        </div>
+      </form>
+      <div id="jira-alert-container"></div>
+    </div>
+  </div><!-- /.modal-content -->
+</div>

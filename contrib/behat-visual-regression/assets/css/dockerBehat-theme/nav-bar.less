@@ -1,0 +1,75 @@
+/* Navbar
+------------------------------------------------------------------------------*/
+.navbar {
+  align-items: center;
+  // background-color: rgba(50,50,50,.7);
+  color: @navbar-inverse-color;
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+  margin: 0 15px;
+  transition: 1s ease-in-out;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+  .header-small & {
+    height: 50px ;
+    padding-top: 0;
+  }
+
+  .container-fluid {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+
+    span {
+      color: #FFF;
+      display: block;
+      margin: 0;
+    }
+  }
+
+  &-left {
+    max-width: 50vw;
+    width: 100%;
+
+    .h3 {
+      display: block;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      div {
+        display: inline;
+      }
+    }
+  }
+
+  &-right {
+
+  }
+}
+
+.filter-label {
+  padding: .5vw;
+  vertical-align: middle;
+}
+
+/* Buttons
+------------------------------------------------------------------------------*/
+.btn {
+  border: none;
+  padding: .5vw 2.5vw .5vw 1vw;
+  position: relative;
+
+  &-default {
+    padding-right: 1vw;
+  }
+
+  .glyphicon {
+    position: absolute;
+    right: 1vw;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

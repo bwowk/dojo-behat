@@ -1,0 +1,15 @@
+#used on scenarios tagged @ciandt or @ciandt:default
+default: 
+  placeholders:
+    #replaces ${site_url}
+    site_url: http://www.ciandt.com
+    #replaces ${lang_url}
+    lang_url: 
+        $default:
+            $br: /br-pt
+            $us: /us-en
+    content_loaded: document.getElementById('home-frame') !== null
+    slogan: 
+        $default:
+            $br: Colabore. Inove. Transforme.
+            $us: Collaborate. Innovate. Transform.

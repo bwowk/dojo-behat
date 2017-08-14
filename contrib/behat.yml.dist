@@ -1,0 +1,31 @@
+default:
+    extensions:
+        Behat\MinkExtension:
+            files_path: %paths.base%/files
+            browser_name: 'chrome'
+            selenium2:
+                wd_host: 'selenium-hub:4444/wd/hub'
+                capabilities:
+                    acceptSslCerts: true
+                    proxy:
+                        proxyType: manual
+                        httpProxy: mitmproxy:8080
+                        sslProxy: mitmproxy:8080
+            default_session: selenium2
+    suites:
+        default:
+            contexts:
+                - Ciandt\MetaContext: ~
+        legacy:
+            paths:    [ %paths.base%/features_refactor]
+            contexts:
+                - Ciandt\DebugContext: ~
+                - Ciandt\WebContext: ~
+                - Ciandt\EmailContext:
+                        server: imap.gmail.com
+                        port: 993
+                        username: jnj-automation-inbox@ciandt.com
+                        password: "@utomate@llTheThings!"
+                        options:
+                          delete: true
+                          debug: true

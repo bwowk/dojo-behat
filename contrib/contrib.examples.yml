@@ -1,0 +1,31 @@
+imports:
+    - '/code/contrib/behat.contrib.yml'
+
+default:
+    extensions:
+      Ciandt\Behat\PlaceholdersExtension:
+          variant_tags:
+              - us #English
+              - br #Brazilian Portuguese
+              - pt #Portugal Portuguese
+              - de #German
+          config_tags:
+              ciandt: %paths.base%/features/Ciandt/ciandt.yml
+              mail: %paths.base%/features/Mail/mail.yml
+              instagram: %paths.base%/features/Instagram/instagram.yml
+    suites:
+        default:
+            paths:    [ %paths.base%/features]
+            contexts:
+                - Ciandt\DebugContext: ~
+                - Ciandt\WebContext: ~
+                - Ciandt\EmailContext:
+                        server: imap.gmail.com
+                        port: 993
+                        username: jnj-automation-inbox@ciandt.com
+                        password: "@utomate@llTheThings!"
+                        options:
+                          delete: true
+                          debug: true
+
+

@@ -1,0 +1,51 @@
+.feedback-wrapper {
+  display: table;
+  width: 100%;
+
+  .content-left,
+  .content-right {
+    display: table-cell;
+    width: 50%;
+  }
+
+  .content-left {
+    width: 83%;
+  }
+
+  .content-right {
+    position: relative;
+    width: 17%;
+  }
+
+  .btn-group {
+    bottom: 20px;
+    left: 15px;
+    position: absolute;
+  }
+
+  &.summary {
+    .btn-group {
+      left: 15px;
+    }
+
+    .btn {
+      background-color: #616161;
+      padding: .5vw 1vw;
+
+      &:hover {
+        background-color: darken(#616161, 15%);
+      }
+    }
+  }
+}
+
+.open-jira {
+  background-color: #616161;
+  color: #fff;
+  padding: .5vw 2.5vw .5vw 1vw;
+
+  &:hover {
+    background-color: darken(#616161, 15%);
+    color: #fff;
+  }
+}

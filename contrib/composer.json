@@ -1,0 +1,77 @@
+{
+  "name": "ciandt/behat-contrib-bundle",
+  "description": "A bundle of contributed Behat Contexts, extensions and functionality",
+  "type": "project",
+  "version": "1.2.2",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Bruno Wowk",
+      "email": "bruno.wowk@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Andre Boscatto",
+      "email": "andreboscatto@gmail.com",
+      "role": "Architect"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "HtmlFormatter"
+    },
+    {
+      "type": "path",
+      "url": "behat-placeholders-extension"
+    },
+    {
+      "type": "path",
+      "url": "WebApiExtension"
+    },
+    {
+      "type": "path",
+      "url": "behat-visual-regression"
+    },
+    {
+      "type": "path",
+      "url": "MinkSelenium2Driver"
+    },
+    {
+      "type": "path",
+      "url": "BehatShellExtension"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Ciandt\\": "contexts/"
+    }
+  },
+  "require": {
+    "ciandt/behat-placeholders-extension": "^1",
+    "ciandt/behat-visual-regression": "0.1.0",
+    "behat/behat": "^3.2.2",
+    "behat/gherkin": "^4.4.1",
+    "behat/mink": "^1.7.1",
+    "behat/mink-extension": "^2.2",
+    "ciandt/mink-selenium2-driver": "1.0.0",
+    "knplabs/friendly-contexts": "^0.8.0",
+    "ciandt/behat-html-formatter": "^1.0.0",
+    "browserstack/browserstack-local": "^1.1",
+    "symfony/process": "^3.2",
+    "behat/web-api-extension": "^1",
+    "flow/jsonpath": "^0.3.4",
+    "postcon/behat-shell-extension": "^1",
+    "symfony/filesystem": "^3.2",
+    "symfony/finder": "^3.2",
+    "phpunit/phpunit": "~4.5"
+  },
+  "scripts": {
+    "cs": "phpcs --extensions=php --colors .",
+    "cbf": "phpcbf --extensions=php --colors .",
+    "test": "behat -fprogress --strict --colors"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^2.7"
+  }
+}

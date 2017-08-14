@@ -1,0 +1,25 @@
+<div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <form id="jira-login-form" autocomplete="on">
+                <div class="form-group">
+                    <label for="input-jira-username">Username</label>
+                    <div class="input-group">
+                        <input type="text" name="jira-username" id="input-jira-username" class="form-control" placeholder="username" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2">@ciandt.com</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-jira-password">Password</label>
+                    <label class="sr-only" for="jiraPassword">password</label>
+                    <input type="password" name="jira-password" class="form-control" id="input-jira-password" placeholder="Password">
+                </div>
+                <div id="btn-jira-login" class="center-block btn btn-default">
+                    login  <span class="glyphicon icon-jira" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-refresh spin pull-right loading" style="visibility: hidden" aria-hidden="true"></span>
+                </div>
+            </form>
+            <div id="jira-alert-container"></div>
+        </div>
+    </div><!-- /.modal-content -->
+</div>

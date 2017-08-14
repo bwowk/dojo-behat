@@ -1,6 +1,21 @@
 # behat.yml
 default:
+    extensions:
+        Knp\FriendlyContexts\Extension: ~
+        Ciandt\Behat\PlaceholdersExtension:
+            config_tags:
+                placeholders: %paths.base%/placeholders.yml
+            variant_tags:
+                - modelA
+                - modelB
+                - modelC
     suites:
-        default:
-            filters:
-                tags: "@KWPH-15&&@smoke"
+        default: ~
+profile2:
+    extensions:
+        Knp\FriendlyContexts\Extension: ~
+        Ciandt\Behat\PlaceholdersExtension:
+            config_tags:
+                placeholders: %paths.base%/placeholders.yml
+    suites:
+        default: ~

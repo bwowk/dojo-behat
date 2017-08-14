@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Visual Regression Results</title>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="assets/css/jira-glyph.css">
+    <link rel="stylesheet" href="assets/css/unslider.css">
+    <link rel="stylesheet" href="assets/css/unslider-dots.css">
+    <link rel="stylesheet" href="assets/css/selectize.bootstrap3.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="assets/js/Chart.min.js"></script>
+  </head>
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <header class="header">
+      <div class="header-fixed">
+        <nav class="navbar">
+          <div class="navbar-left">
+            <span class="content content-title h3" contenteditable="true">Visual Regression Report</span>
+            <span class="content content-date h5">{{ datetime }}</span>
+          </div>
+
+          <!-- Filter -->
+          <div class="navbar-right filter" id="filter" role="group" aria-label="...">
+            <span class="filter-label h4">Filter:</span>
+            <button type="button" data-filter-status="false" class="filter-button btn btn-default">All</button>
+            <button type="button" data-filter-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::APPROVED')}}" class="filter-button btn btn-success">
+              Approved <span class="glyphicon glyphicon-ok-sign"></span>
+            </button>
+            <button type="button" data-filter-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::FALSE_POSITIVE')}}" class="filter-button btn btn-primary">
+              False-Positive <span class="glyphicon glyphicon-minus-sign"></span>
+            </button>
+            <button type="button" data-filter-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::BUG')}}" class="filter-button btn btn-danger">
+              Bug <span class="glyphicon glyphicon-remove-sign"></span>
+            </button>
+            <button type="button" data-filter-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::SKIPPED')}}" class="filter-button btn btn-info">
+              Skipped <span class="glyphicon glyphicon-ban-circle"></span>
+            </button>
+            <button type="button" data-filter-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::PENDING')}}" class="filter-button btn btn-warning">
+              Pending <span class="glyphicon glyphicon-record"></span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Progress bar -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-success progress-bar-approved" role="progressbar" style="width:30%"></div>
+          <div class="progress-bar progress-bar-primary progress-bar-false-positive" role="progressbar" style="width:10%"></div>
+          <div class="progress-bar progress-bar-danger progress-bar-bug" role="progressbar" style="width:20%"></div>
+          <div class="progress-bar progress-bar-info progress-bar-skip" role="progressbar" style="width:10%"></div>
+          <div class="progress-bar progress-bar-warning progress-bar-pending" role="progressbar" style="width:30%"></div>
+        </div>
+      </div>
+
+      <div class="summary feedback-wrapper container-fluid">
+        <div class="content-left">
+          <!-- Report summary -->
+          <div class="summary">
+            <h3>Report summary:</h3>
+            <div class="well" contenteditable="true">
+            </div>
+          </div>
+
+          <div id="main-alert-container" class="container-fluid"></div>
+        </div>
+
+        <div class="content-right">
+          <!-- Save buttons -->
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+            <button type="button" id="btn-saveas-pop" class="btn btn-primary" data-container="body" data-toggle="popover"
+                    data-placement="top" data-html="true"
+                    data-content='<div class="input-group"><input type="text" name="filename" id="input-filename" class="form-control" placeholder="filename" aria-describedby="basic-addon2"><span class="input-group-addon" id="basic-addon2">.html</span></div> <button type="button" id="btn-saveas" class="btn btn-primary form-control">Save</button>'>
+              Save as
+            </button>
+            <a class="btn btn-primary" href="/browse/{{ profile }}/report" role="button">Browse</a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="my-slider">
+              <ul></ul>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="jira-modal" class="modal fade" tabindex="-1" role="dialog"></div>
+
+    <div class="container-fluid theme-showcase" role="main">
+
+      <div class="details panel-group" role="tablist" aria-multiselectable="true">
+        {% for checkpoint in checkpoints %}
+          <div class="panel panel-default checkpoint {{ checkpoint.status }}">
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#checkpoint-{{ checkpoint.id }}"
+                   aria-expanded="true"
+                   aria-controls="checkpoint-{{ checkpoint.id }}">
+                  Checkpoint: {{ checkpoint.name}}
+                </a>
+                {% for tag in checkpoint.tags %}
+                  <span class="badge label-default">@{{tag}}</span>
+                {% endfor %}
+                <span class="glyphicon glyphicon-chevron-up
+                      pull-right" aria-hidden="true"></span>
+                {% if checkpoint.diffPercent > 0.001 %}
+                  <span class="label label-danger pull-right">{{ checkpoint.diffPercent|number_format(3, '.', ',') }}% different</span>
+                {% elseif checkpoint.diffPercent > 0.0 %}
+                  <span class="label label-danger pull-right">~ 0.001% different</span>
+                {% elseif checkpoint.diffPercent is not same as(false) %}
+                  <span class="label label-success pull-right">no differences</span>
+                {% endif %}
+              </h4>
+            </div>
+
+            <div id="checkpoint-{{ checkpoint.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="flexbox row container-fluid checkpoint-thumbnails">
+                <div class="col col-md-4 thumbnail baseline">
+                  {% if checkpoint.baseline != false %}
+                    <div class='zoom' data-zoom-target="{{ checkpoint.id }}">
+                      <img class="snapshot" src="{{ checkpoint.baseline }}" width="100%" alt="Baseline" value="baseline">
+                    </div>
+                  {% else %}
+                    <div class="placeholder snapshot" width="100%">
+                        <img class="snapshot" src="{{ checkpoint.current }}" width="100%" alt="Baseline" value="baseline">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </div>
+                    {% endif %}
+                  <div class="caption text-center">
+                    <h3>Baseline</h3>
+                  </div>
+                </div>
+
+                <div class="col col-md-4 thumbnail current">
+                  <div class='zoom' data-zoom-target="{{ checkpoint.id }}">
+                    <img class="snapshot" src="{{ checkpoint.current }}" width="100%" alt="Current" value="current">
+                  </div>
+                  <div class="caption text-center">
+                    <h3>Actual</h3>
+                  </div>
+                </div>
+
+                <div class="col col-md-4 thumbnail diff">
+                  {% if checkpoint.diff != false %}
+                    <div class='zoom' data-zoom-target="{{ checkpoint.id }}">
+                      <img class="snapshot" src="{{ checkpoint.diff }}" width="100%" alt="Diff" value="diff">
+                    </div>
+                  {% else %}
+                    <div class="placeholder snapshot">
+                        <img class="snapshot" src="{{ checkpoint.current }}" width="100%" alt="Diff" value="diff">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </div>
+                    {% endif %}
+                  <div class="caption text-center">
+                    <h3>Differences</h3>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="comment feedback-wrapper">
+                <div class="content-left"> -->
+                  <div class="comment">
+                    <label>Comments</label>
+                    <div class="well well-lg">
+                      <p contenteditable="true"></p>
+                    </div>
+                  </div>
+                <!-- </div> -->
+
+                <!-- <div class="content-right"> -->
+                  <div class="btn-group form-inline text-right">
+                    <button type="button" data-set-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::APPROVED')}}" class="btn btn-success">
+                      Approved  <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" data-set-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::FALSE_POSITIVE')}}" class="btn btn-primary">
+                      False Positive  <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" data-set-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::PENDING')}}" class="btn btn-warning">
+                      Pending  <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" data-set-status="{{constant('Ciandt\\Behat\\VisualRegressionExtension\\Definitions\\VisualCheckpoint::BUG')}}" class="btn btn-danger">
+                      Bug  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn open-jira">
+                      Open Issue  <span class="glyphicon icon-jira" aria-hidden="true"></span>
+                    </button>
+                  </div>
+               <!--  </div>
+              </div> -->
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- /container -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.matchHeight-min.js"></script>
+    <script src="assets/js/jquery.zoom.min.js"></script>
+    <script src="assets/js/visual-regression.js"></script>
+    <script src="assets/js/unslider-min.js"></script>
+    <script src="assets/js/selectize.min.js"></script>
+
+  </body>
+</html>

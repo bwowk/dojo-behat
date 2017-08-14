@@ -1,0 +1,58 @@
+# Cenário
+# Possuímos 2 ambientes ($default e development)
+# Possuímos 4 languages (BR / US / DE / FR)
+# placeholder_1 é um valor que muda em todos os ambiente e para todas as languages
+# placeholder_2 é um valor que muda para todas as languages porém é o mesmo em todos os ambientes
+# placeholder_3 é o mesmo valor tanto para os ambientes como languages
+# placeholder_4 possui alguns valores iguais entre os ambientes, porém $de e $fr são iguais
+
+# Esqueleto do uso de placeholders
+conjunto_primário: # Geralmente definimos um conjunto $default, mas podemos ter outros conjuntos complementares
+  placeholders: # Palavra Reservada, indica que os próximos elementos são definições de placeholders
+    placeholder_1: # token usado para o placeholder desejado
+    # Nome do environment, passado por linha de comando --environment ou -e
+    # Caso o valor seja omisso na linha de comando, está sub-entendido que será usado $default
+    # exemplo de uso: $ behat --environment default OU simplesmente $ behat
+      $default:
+            $br: Value_1
+            $us: Value_2
+            $de: Value_3
+            $fr: Value_4
+      $development: # nome do environment, passado por linha de comando --environment ou -e 
+      # exemplo de uso: $ behat --environment development
+            $br: Value_5
+            $us: Value_6
+            $de: Value_7
+            $fr: Value_8      
+
+    # Como os valores para ambos os ambiente são iguais, não foi necessário
+    # definir os valores para development, pois ele vai usar os de $default
+    placeholder_2:
+      $default:
+            $br: Value_1_1
+            $us: Value_1_2           
+            $de: Value_1_3
+            $fr: Value_1_4
+
+    # Como os valores de placeholder_3 são os mesmos em qualquer situação, 
+    # podemos definir o placeholder da seguinte maneira
+    placeholder_3: Value_9
+
+    # placeholder_4 possui alguns valores iguals entre os ambientes
+    # Nesse caso vamos falar que $de e $fr tem os mesmos valores para os ambientes
+    # Então podemos definir da seguinte maneira o placeholder
+    placeholder_4:
+      $default:
+            $br: Value_1_1
+            $us: Value_1_2           
+            $de: Value_1_3
+            $fr: Value_1_4
+      $development:
+            $br: Value_1_5
+            $us: Value_1_6        
+            # Não foi necessário definir $de e $fr, eles terão os valores de $default
+            # Obs: Independente de quantos ambientes você tenha definido, 
+            # se ele não encontrar o valor especificado no ambiente que está sendo executado
+            # ele irá buscar SEMPRE em $default
+
+

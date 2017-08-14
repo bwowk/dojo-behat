@@ -1,0 +1,50 @@
+.header {
+  padding-top: 30vh;
+  transition: .5s ease-in-out;
+
+  &.header-small {
+    padding: 0;
+
+    .progress {
+      height: 20px;
+      margin: 10px 0;
+    }
+
+  }
+
+  .header-fixed {
+    background-color: rgba(50,50,50,.8);
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: @zindex-navbar-fixed;
+  }
+
+  /* Progress bar
+  ----------------------------------------------------------------------------*/
+  .progress {
+    background: transparent;
+    border-radius: 0px;
+    box-shadow: none;
+    display: table;
+    height: 50px;
+    margin: 15px 0;
+    padding: 0 15px;
+    transition: 1s ease-in-out;
+    width: 100%;
+    z-index: 1030;
+  }
+
+  .progress-bar {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+  }
+}
+
+
+
+
+/* Report summary
+------------------------------------------------------------------------------*/

@@ -1,0 +1,89 @@
+version: '2'
+services:
+  behat:
+    container_name: behat
+    image: ciandt/behat:1.2
+    environment:
+     - HISTFILE=/root/.zsh_history
+     - BROWSERSTACK_USERNAME=luizcieslak1
+     - BROWSERSTACK_ACCESS_KEY=enB3qyzuQtR54Vt47eyx
+     - COMPOSER_HOME=/home/behat/.composer
+    volumes:
+     - .:/code
+     - .ssh:/home/behat/.ssh
+     - .cache/.browserstack:/home/behat/.browserstack
+     - .cache/.composer:/home/behat/.composer
+    links:
+      - selenium-hub:selenium
+      - mitmproxy
+      - visual-regression
+    depends_on:
+      - selenium-firefox
+      - selenium-chrome
+    dns: &DNS
+     - 172.16.38.27
+     - 172.16.22.40
+     - 172.16.22.69
+     - 127.0.0.11
+    stdin_open: true
+    tty: true
+
+  selenium-hub:
+    image: selenium/hub:3.0.0-dubnium
+    ports:
+      - 4444:4444
+    dns: *DNS
+
+  selenium-firefox:
+    environment:
+      - no_proxy="" #Using this flag for MAC only (https://github.com/SeleniumHQ/docker-selenium/issues/227)
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    container_name: selenium-firefox
+    image: selenium/node-firefox-debug:2.53.1
+    ports:
+      - 35900:5900
+    links:
+      - selenium-hub
+    dns: *DNS
+
+  selenium-chrome:
+    environment:
+      - no_proxy="" #Using this flag for MAC only (https://github.com/SeleniumHQ/docker-selenium/issues/227)
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    container_name: selenium-chrome
+    image: selenium/node-chrome-debug:3.0.0-dubnium
+    ports:
+      - 35901:5900
+    links:
+      - selenium-hub
+    dns: *DNS
+    shm_size: 256M
+  mitmproxy:
+    image: mitmproxy/mitmproxy:1.0.2
+    volumes:
+     - ./mitmproxy:/conf/
+    entrypoint: mitmdump
+    command: --conf /conf/mitmproxy.yml --insecure
+    dns: *DNS
+    
+    
+  visual-regression:
+    image: node:alpine
+    environment:
+      - APP_TOKEN=jsjxVR8bYtKo
+    volumes:
+      - ./visual_regression:/www
+      - ./contrib/behat-visual-regression:/code
+    working_dir: /code
+    command: ash -c "npm install && node main.js"
+    ports:
+      - "3000:3000"
+      
+  the-internet:
+    image: gprestes/the-internet:2.3
+    expose:
+      - 80
+    command: bundle exec rackup --host 0.0.0.0 -p 80
+    

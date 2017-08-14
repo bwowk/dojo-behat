@@ -1,0 +1,234 @@
+default:
+    formatters:
+      html:
+        output_path: /code/reports
+      pretty: ~
+    extensions:
+        Knp\FriendlyContexts\Extension: ~
+        Ciandt\Behat\VisualRegressionExtension: ~
+        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+          name: html
+          renderer: Twig
+          file_name: index
+          print_args: true
+          print_outp: true
+          loop_break: true
+        Behat\MinkExtension:
+            files_path: %paths.base%/files
+            #use chrome by default
+            browser_name: 'chrome'
+            selenium2:
+                wd_host: 'selenium-hub:4444/wd/hub'
+                capabilities:
+                    acceptSslCerts: true
+                    proxy:
+                        proxyType: manual
+                        httpProxy: mitmproxy:8080
+                        sslProxy: mitmproxy:8080
+            default_session: selenium2
+firefox:
+     extensions:
+        Behat\MinkExtension:
+            browser_name: 'firefox'
+            selenium2:
+                capabilities:
+                    browserVersion: 47.0.1
+chrome:
+     extensions:
+        Behat\MinkExtension:
+            browser_name: 'chrome'
+# If browser_version capability is not set, the test will run on the latest version
+# of the browser set by browser capability.
+
+
+#Warning: Browserstack's edge is not working with local domains
+browserstack-edge-latest:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "10"
+                    "browser": "Edge"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-ie11:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "10"
+                    "browser": "IE"
+                    "version": "11.0"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-ie10:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "8"
+                    "browser": "IE"
+                    "version": "10.0"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-ie9:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "7"
+                    "browser": "IE"
+                    "version": "9.0"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-ie8:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "7"
+                    "browser": "IE"
+                    "version": "8.0"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-safari-latest:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "OS X"
+                    "os_version": "Sierra"
+                    "browser": "Safari"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-chrome-latest:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities:
+                    "os": "Windows"
+                    "os_version": "10"
+                    "browser": "Chrome"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+#Warning: Firefox has some limitations with selenium from v48 upwards
+#i.e.: it doesn't work with self-signed certificates
+browserstack-firefox-latest:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "os": "Windows"
+                    "os_version": "10"
+                    "browser": "Firefox"
+                    "resolution": "1920x1080"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-iphone6:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "browserName": "iPhone"
+                    "platform": "MAC"
+                    "device": "iPhone 6"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-ipad-air2:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "browserName": "iPad"
+                    "platform": "MAC"
+                    "device": "iPad Air 2"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 
+browserstack-galaxys5:
+    extensions: 
+        Behat\MinkExtension: 
+            browser_stack: 
+                capabilities: 
+                    "browserName": "android"
+                    "platform": "ANDROID"
+                    "device": "Samsung Galaxy S5"
+                    #required to access local network domains
+                    browserstack-tunnel: true
+                    extra_capabilities:
+                        browserstack.localIdentifier: docker-behat
+                    #required to accept invalid ssl certificates
+                    acceptSslCerts: true
+            default_session: browser_stack 
+            javascript_session: browser_stack 

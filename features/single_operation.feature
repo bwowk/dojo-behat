@@ -1,10 +1,12 @@
+@placeholders
 Feature: Calc operations
 
   Background: I have a calculator
     Given I have a calculator
 
+  @smoke @modelA @modelB @modelC
   Scenario: Calc sum two numbers
-    When I sum 2 and 3
+    When I sum "${two}" and 3
     Then The result should be 5
 
   @smoke @KWPH-15
@@ -18,17 +20,11 @@ Feature: Calc operations
     | -1 | 10 | 9 |
 
 
-  @regression
+  @KWPH-15
   Scenario: Calculator history is printed correctly
     When I sum 1 and 1
-    And I press equals
-    Then It should print:
-    """
-    + 1
-    + 1
-    %s
-    2
-    """
+    Then the history should show result 2
+
 
   Scenario: Calculator can do mixed operations
     When I do the operations:

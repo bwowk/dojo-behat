@@ -1,0 +1,40 @@
+{
+  "name": "ciandt/behat-html-formatter",
+  "replace": {
+    "emuse/behat-html-formatter":"^0.1.0"
+  },
+  "version": "1.0.0",
+  "description": "Html formatter for Behat.",
+  "authors": [
+    {
+      "name": "Bruno Wowk",
+      "email": "bwowk@ciandt.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Andre Boscatto",
+      "email": "aboscatto@ciandt.com",
+      "role": "Architect"
+    },
+    {
+      "name": "Cassio Almeida",
+      "email": "cassiop@ciandt.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "twig/twig": "~1.5",
+    "behat/behat": "~3.0",
+    "behat/gherkin": "~4.2"
+  },
+  "require-dev": {
+    "symfony/process": ">2.3,<4.0",
+    "phpunit/phpunit": "~4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "emuse\\BehatHTMLFormatter\\": "src/"
+    }
+  }
+}

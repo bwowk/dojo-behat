@@ -1,0 +1,6 @@
+#line endings 
+*.php           text eol=lf
+*.json          text eol=lf
+*.feature       text eol=lf
+*.yml           text eol=lf
+

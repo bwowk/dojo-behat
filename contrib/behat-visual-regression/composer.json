@@ -1,0 +1,34 @@
+{
+    "name": "ciandt/behat-visual-regression",
+    "type": "behat-extension",
+    "version": "0.1.0",
+    "description": "Extension to use placeholder parameters on scenarios",
+    "keywords": ["behat", "evironment", "placeholder", "variant"],
+    "homepage": "https://github.com/ciandt-dev/behat-placeholders-extension",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Bruno Wowk",
+            "email": "bruno.wowk@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Andre Boscatto",
+            "email": "andreboscatto@gmail.com",
+            "role": "Architect"
+        }
+    ],
+
+    "require": {
+        "behat/behat":  "~3.0",
+        "behat/mink-selenium2-driver": "*"
+    },
+
+
+    "autoload": {
+        "psr-4": { "": "src/" }
+    },
+    "require-dev": {
+        "behat/mink-extension": "^2.2"
+    }
+}

@@ -1,0 +1,5 @@
+ignore_hosts:
+    - browserstack.com
+    - bs-local.com
+setheaders:
+    - [~u r"the-internet/basic_auth",Authorization,Basic YWRtaW46YWRtaW4=]

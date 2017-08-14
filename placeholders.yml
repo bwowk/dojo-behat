@@ -1,0 +1,8 @@
+default:
+    placeholders:
+        two: "2"
+        service:
+          $default:
+            $ldap: ldap
+            $postgres: postgresql
+            $mongodb: mongodb

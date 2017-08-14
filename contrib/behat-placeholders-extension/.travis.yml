@@ -1,0 +1,20 @@
+language: php
+
+php: [5.4, 5.5, 5.6, 7.0, 7.1]
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+branches:
+  only:
+    - master
+
+before_script:
+  - composer install
+  - export PATH=./vendor/bin:$PATH
+
+script:
+  - behat --format=progress --strict

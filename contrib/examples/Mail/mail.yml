@@ -1,0 +1,9 @@
+#used on scenarios tagged @mail
+default:
+  placeholders:
+    site_url: https://putsmail.com
+    #replaces ${recipient_mail}
+    recipient_mail: jnj-automation-inbox+email-context-example@ciandt.com
+    mail_subject: "Testing EmailContext: it works ;)"
+    mail_plaintext_content: Plain goes here!
+    mail_html_content: <p> HTML content </p>
