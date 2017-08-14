@@ -1,8 +1,11 @@
 default:
     placeholders:
-        two: "2"
-        service:
+        mongodb:
+        two: "${service}"
+        bla:
           $default:
-            $ldap: ldap
-            $postgres: postgresql
-            $mongodb: mongodb
+            $modelA: ldap
+            $modelB: "${two}"
+        api_url:
+            $default: localhost:8080
+            $dev: 172.32.3.111:8080

@@ -1,89 +1,86 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
+use Ciandt\Gameboy;
 
-use Ciandt\Calc;
 
-/**
- * Defines application features from the specific context.
- */
 class FeatureContext implements Context
 {
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
-    public function __construct()
-    {
-    }
-    private $calculator;
-
-    /**
-     * @Given I have a calculator
-     * creates a Ciandt\Calc instance
-     */
-    public function iHaveCalculator()
-    {
-        $this->calculator = new Calc();
-    }
-
-    /**
-     * @When I sum :arg1 and :arg2
-     * @When I sum :arg1 and :arg2 and :$arg3
-     */
-    public function iSumAnd($arg1, $arg2, $arg3 = null)
-    {
-        $this->calculator->doOp('+',$arg1);
-        $this->calculator->doOp('+',$arg2);
-        echo $arg1;
-    }
-
-    /**
-     * @Then The result should be :arg1
-     */
-    public function theResultShouldBe($arg1)
-    {
-        $result = $this->calculator->equals();
-        if($result != $arg1){
-          throw new Exception("Deu ruim");
-        }
-    }
-
-    /**
-    * @When I press equals
-    */
-   public function iPressEquals()
-   {
-     $this->calculator->equals();
-   }
-
-   /**
-    * @Then It should print:
-    */
-   public function itShouldPrint(PyStringNode $string)
-   {
-     $history = $this->calculator->printHistory();
-     Assert::assertStringMatchesFormat($string->getRaw(), $history);
-   }
+  private $gameboy = null;
 
 
+  /**
+   * [iHaveAGameboy description]
+   * @Given I have a Gameboy
+   */
+  public function iHaveAGameboy(){
+    $this->gameboy = new Gameboy();
+  }
 
-    /**
-     * @When I do the operations:
-     */
-    public function iDoTheOperations(TableNode $table)
-    {
-       foreach ($table->getRows() as $row) {
-         $operator = $row[0];
-         $number = $row[1];
-         $this->calculator->doOp($operator, $number);
-       };
-    }
+  /**
+   * [iChargeTheGameboy description]
+   * @Given I charge it
+   * @Given I charge the Gameboy
+   */
+  public function iChargeTheGameboy(){
+    $this->gameboy->charge();
+  }
+
+  /**
+   * [iPutTheCartridge description]
+   * @param  [type] $cartridge [description]
+   * @When I put the :game cartridge
+   */
+  public function iPutTheCartridge($game) {
+      $this->gameboy->insertCartridge(Gameboy::CARTRIDGES[$game]);
+  }
+
+  /**
+   * [iTurnTheGameboyOn description]
+   * @When I turn it on
+   * @When I turn the Gameboy on
+   */
+  public function iTurnTheGameboyOn(){
+    $this->gameboy->switch_on();
+  }
+
+  /**
+   * [itShouldHaveThePokemon description]
+   * @Then it should have the pokemon :name
+   */
+  public function itShouldHaveThePokemon($name) {
+    Assert::assertContains($name, $this->gameboy->getPokemons());
+  }
+
+  /**
+   * @BeforeScenario @charged
+   */
+  public function charged() {
+    $this->iHaveAGameboy();
+    $this->gameboy->charge();
+  }
+
+  /**
+   *@BeforeScenario @pokemonRed
+   */
+  public function insertRed(){
+    $this->iPutTheCartridge('Pokemon_Red');
+  }
+
+  /**
+   *@BeforeScenario @pokemonBlue
+   */
+  public function insertBlue(){
+    $this->iPutTheCartridge('Pokemon_Blue');
+  }
+
+  /**
+   *@BeforeScenario @pokemonYellow
+   */
+  public function insertYellow(){
+    $this->iPutTheCartridge('Pokemon_Yellow');
+  }
+
+
 }

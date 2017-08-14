@@ -5,12 +5,11 @@ default:
         Ciandt\Behat\PlaceholdersExtension:
             config_tags:
                 placeholders: %paths.base%/placeholders.yml
+                pokemon: %paths.base%/features/pokemon.yml
             variant_tags:
-                - modelA
-                - modelB
-                - modelC
-    suites:
-        default: ~
+                - pokemonRed
+                - pokemonBlue
+                - pokemonYellow
 profile2:
     extensions:
         Knp\FriendlyContexts\Extension: ~

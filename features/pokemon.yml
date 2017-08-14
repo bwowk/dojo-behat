@@ -1,0 +1,12 @@
+default:
+    placeholders:
+        pokemon_edition:
+          $default:
+            $pokemonRed: "Pokemon_Red"
+            $pokemonBlue: "Pokemon_Blue"
+            $pokemonYellow: "Pokemon_Yellow"
+        pokemon_Name:
+          $default:
+            $pokemonRed: "Ekans"
+            $pokemonBlue: "Meowth"
+            $pokemonYellow: "Scyther"
